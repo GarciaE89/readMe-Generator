@@ -11,14 +11,14 @@ inquirer.prompt([
         message: 'What is your project title? (Required)',
         // validate question 
         validate: projectName => {
-            if(projectName){
+            if (projectName) {
                 return true;
-                
-            } else{
+
+            } else {
                 console.log('Please provide project title!');
             }
         }
-        
+
     },
     {
         type: 'input',
@@ -26,9 +26,9 @@ inquirer.prompt([
         message: 'Provide a description of your project (Required)',
         // validate project description
         validate: projectDesc => {
-            if(projectDesc){
+            if (projectDesc) {
                 return true;
-            } else{
+            } else {
                 console.log('Project description is required!');
             }
         }
@@ -56,7 +56,7 @@ inquirer.prompt([
         name: 'contribution',
         message: 'How can other Developers contribute?',
         when: ({ contributionConfirm }) => {
-            if(contributionConfirm){
+            if (contributionConfirm) {
                 return true;
             } else {
                 return false;
@@ -64,10 +64,22 @@ inquirer.prompt([
         }
     },
     {
-        type: 'list',
-        message: 'Which license would you like to include with this project?',
+        //checkbox that allows license choice
+        type: 'checkbox',
         name: 'license',
-        choices: ['MIT', 'GPL_v3', 'AGPL']
+        message: 'Please choose a license.',
+        choices: ['GNU AGPLv3', 'GNU GPLv3',
+            'GNU LGPLv3', 'Mozilla Public License 2.0',
+            'Apache License 2.0', 'MIT License', 'Boost Software License 1.0',
+            'The Unlicense'],
+        validate: nameInput => {
+            if (nameInput) {
+                return true;
+            } else {
+                console.log('Please select a license.');
+                return false;
+            }
+        }
     },
     {
         type: 'input',
@@ -79,27 +91,20 @@ inquirer.prompt([
         name: 'email',
         message: 'What is your email address?'
     }
-    
 
-    
+
+
 ])
 
-// TODO: Create a function to write README file
-// .then(function(data) {
-//     fs.writeFile('README.md', generateMarkdown(data), function(err) {
-//       if (err) {
-//         return console.log(err);
-//       }
+    // TODO: Create a function to write README file
+    .then(function (data) {
+        fs.writeFile('README.md', generateMarkdown(data), function (err) {
+            if (err) {
+                return console.log(err);
+            }
 
-//       console.log('Success!  Your readme is now in the myReadme folder.');
-//     });
-//   });
+            console.log('Success!  Your readme is now available');
+        });
+    });
 
 
-// function writeToFile(fileName, data) {}
-
-// // TODO: Create a function to initialize app
-// function init() {}
-
-// // Function call to initialize app
-// init();
