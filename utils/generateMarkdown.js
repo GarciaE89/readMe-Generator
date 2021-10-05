@@ -36,4 +36,123 @@ function generateMarkdown(data) {
     licenseOption = 'TheUnlicense';
     licenseLink = 'https://choosealicense.com/licenses/unlicense/';
   };
+
+//create variable to hold markdown template and dynamically add to it
+let markdownTemp =
+    
+//title, badge, and description
+    
+`# ${data.title}
+## Description
+${data.description}
+![badge](https://img.shields.io/badge/license-${licenseOption}-brightorange)
+You can access more badges and their purposes at [shields.io](https://shields.io)
+`;
+  //create optional sections in a table of contents to 
+  //be added after required title, description
+
+let tableOfContents =
+`## Table of Contents`;
+  if (data.installation) {
+    tableOfContents +=
+      `
+  * [Installation](#installation)`
+  };
+  if (data.instructions) {
+    tableOfContents +=
+      `
+  * [Usage](#usage)`
+  };
+  if (data.contribution) {
+    tableOfContents +=
+      `
+  * [Contribution](#contribution)`
+  };
+  if (data.testing) {
+    tableOfContents +=
+      `
+  * [Testing](#testing)`
+  };
+
+  //append table to template
+  markdownTemp += tableOfContents;
+
+  //add contact info and license (required)
+  markdownTemp +=
+    `
+  * [Questions](#questions)`;
+  markdownTemp +=
+    `
+  * [License](#license)
+    
+    `;
+
+  //add optional sections content
+
+  //installation
+  if (data.installation) {
+    markdownTemp +=
+      `
+## Installation
+    
+  _Follow these steps to properly install this application:_
+  ${data.installation}`
+  };
+
+  //usage
+  if (data.instructions) {
+    markdownTemp +=
+      `
+      
+## Usage
+  _Instructions for use:_
+  ${data.instructions}`
+  };
+
+  //contributions
+  if (data.contribution) {
+    markdownTemp +=
+      `
+      
+## Contribution
+  _If you would like to contribute, please adhere to these guidelines:_
+  ${data.contribution}`
+  };
+
+  //testing
+  if (data.testing) {
+    markdownTemp +=
+      `
+      
+## Testing
+  _Instructions for testing application:_
+  ${data.testing}`
+  };
+
+  //questions
+    markdownTemp +=
+      `
+      
+## Questions
+      
+  _For further questions:_
+  ${data.questions}
+  
+  _Contact Info:_
+  GitHub: [${data.githubName}](https://github.com/${data.githubName})
+  Email: [${data.email}](mailto:${data.email})`;
+  
+  markdownTemp +=
+    `
+    
+## License
+      
+  _This application has the ${data.license}._
+      
+  For more information please view the [license description](${licenseLink}).
+  
+  `;
+  return markdownTemp;
 }
+
+module.exports = generateMarkdown;
